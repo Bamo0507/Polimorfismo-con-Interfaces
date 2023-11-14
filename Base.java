@@ -1,3 +1,10 @@
+//Bryan Alberto Martínez Orellana
+//Carnét 23542
+//Ingeniería en Ciencias de la Computación
+//Programación Orientada a Objetos
+//Creación: 10/10/2023
+//Última modificación: 13/10/2023
+
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -17,7 +24,8 @@ public class Base extends Usuario implements Paquete {
     @Override
     //Método para selccionar una cantidad de maletas, tomando en cuenta el tipo de usuario
     public int cantidadMaletas() {
-        Scanner sc = new Scanner(System.in);    
+        Scanner sc = new Scanner(System.in);  
+        //Dependiendo del tipo de usuario, se podrán tener diferentes cantidades en las maletas  
         if (tipoUsuario.equals("Base")) {
             cantMaletas = 1;
             System.out.println("Por su plan base, se le ha definido que solo puede llevar una maleta po boleto.");
@@ -62,12 +70,13 @@ public class Base extends Usuario implements Paquete {
         String input;
 
         //Se solicita una tarjeta de 12 dígitos
+        System.out.println("~~~~~~~~~~~~~~  ~~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~~~");
         System.out.println("¿Cuál será la tarjeta que desea emplear para las transacciones?");
         while (!entradaValida) {
             input = sc.nextLine();
             // Verifica si la entrada tiene exactamente 12 dígitos
             if (input.matches("\\d{12}")) {
-                numTarjeta = Integer.parseInt(input);
+                numTarjeta = Long.parseLong(input);
                 entradaValida = true;
             } else {
                 System.out.println("Por favor, ingrese un número de tarjeta válido de 12 dígitos.");
@@ -78,6 +87,7 @@ public class Base extends Usuario implements Paquete {
         //Definimos la cantidad de pagos en los que se espera terminar de pagar
         //Solo se permiten de 1 a 24 cuotas
         int cantPagos = 0;
+        System.out.println("~~~~~~~~~~~~~~  ~~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~~~");
         if (tipoUsuario.equals("Premium")){
             System.out.println("Por ser premium, ya se ha definido que pagará en un pago ;)");
             cantPagos = 1;
@@ -98,6 +108,7 @@ public class Base extends Usuario implements Paquete {
                 }
             }
         }
+        System.out.println("~~~~~~~~~~~~~~  ~~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~~~");
 
         //Se establece la clase de cada uno de los boletos
         if(tipoUsuario.equals("Premium")){
@@ -124,15 +135,18 @@ public class Base extends Usuario implements Paquete {
                         System.out.println("Por favor, seleccione una opción válida.");
                         break;
                 }
+            }
         }
-        }
+        System.out.println("~~~~~~~~~~~~~~  ~~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~~~");
 
         //Definimos la cantidad de maletas
         cantMaletas = cantidadMaletas();
+        System.out.println("~~~~~~~~~~~~~~  ~~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~~~");
 
         //Seleccionamos los asientos
         Set<Integer> asientos = new HashSet<>();
         for(int i = 0; i < cantBoletos; i++) {
+            
             int numero;
             do{
                 numero = seleccionAsiento();
@@ -147,9 +161,11 @@ public class Base extends Usuario implements Paquete {
                 sb.append(";");
             }
         }
+        System.out.println("Se le han asignado los asientos: " + asientos + ".");
         numAsiento = sb.toString();
 
         //Mostrar al usuario todo lo que ha seleccionado, se verificará si quiere continuar
+        System.out.println("~~~~~~~~~~~~~~  ~~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~~~");
         System.out.println("Has definido que te irás: " + fechaIda);
         System.out.println("Has seleccionado que quieres " + cantBoletos + " boletos");
         System.out.println("Regresaras en " + fechaVuelta + " días");
@@ -159,6 +175,7 @@ public class Base extends Usuario implements Paquete {
         System.out.println("Viajará en clase: " +  claseVuelo + ".");
         System.out.println("Lleva " + cantMaletas + " maletas.");
         System.out.println("Tomó los asientos: " + numAsiento);
+        System.out.println("~~~~~~~~~~~~~~  ~~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~~~");
 
         //Establecemos si el usuario confirma su compra o si ya no quiere
         int seleccionTipo = 0;
@@ -183,10 +200,11 @@ public class Base extends Usuario implements Paquete {
                     break;
             }
         }
+        System.out.println("~~~~~~~~~~~~~~  ~~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~~~");
 
         //Se confirma el pago si desea confirmar
         if(establecerSiNo.equals("Si")){
-            System.out.println("LISTO!!! Su vuelo ha sido cancelado.\n");
+            System.out.println("LISTO!!! Su vuelo ha sido confirmado.\n");
         } else{ //Si no confirma, reseteamos toda la información importante
             System.out.println("Se ha borrado la información que ha seleccionado, cancelamos su pago :)");
             fechaIda = "";
@@ -198,60 +216,76 @@ public class Base extends Usuario implements Paquete {
             numAsiento = "";
             cantMaletas = -1;
         }
-
+        manejoCSV.agregarDatosVuelo(nombre, fechaIda, fechaVuelta, cantBoletos, Aerolinea, numTarjeta, claseVuelo, numAsiento, cantMaletas, cantPagos);
     }
 
     @Override
     //Opciones para modificar perfil
     public void modificarPerfil() {
         Scanner sc = new Scanner(System.in);
+        //Menú para modificar características del perfil
+        System.out.println("~~~~~~~~~~~~~~  ~~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~~~");
         System.out.println("Hola querido usuario, qué desearías hacer con tu cuenta?");
         int seleccion = 0;
         while(!(seleccion >= 1 && seleccion <= 3)){
-            seleccion = obtenerEnteroValido(sc);
+            
             System.out.println("¿Qué deseas hacer el día de hoy?");
             System.out.println("1. Subir a PREMIUM!!!");
             System.out.println("2. Aplicar cupón");
             System.out.println("3. Cambiar contraseña");
+            seleccion = obtenerEnteroValido(sc);
             switch(seleccion){
                 case 1:
+                    //Se modifica el tipo del usuario
                     System.out.println("Listo!! Ahora es un usuario PREMIUM");
                     tipoUsuario = "Premium";
+                    manejoCSV.agregarValoresStr(nombre, 0, "Premium");
+                    System.out.println("En la próxima vez que ingrese aparecerá formalmente como un usuario PREMIUM ;)");
+                    System.out.println("Sin embargo, de momento ya puede acceder a algunas de estas opciones.");
+                    System.out.println("Regresando al menú principal.");
                     break;
                 case 2:
+                    //Se asigna un cupón al usuario (BÁSICO)
+                    System.out.println("~~~~~~~~~~~~~~  ~~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~~~");
                     if(tipoUsuario.equals("Base")){
                         System.out.println("Por ser usuario base, solo se le aplicará un cupón del 10% en su siguiente compra.");
                         System.out.println("Para mayores beneficios, suba a premium.");
                         cupones = "10% en siguiente compra";
                     }else {
-                        seleccion = 0;
-                        while(!(seleccion >= 1 && seleccion <= 3)){
-                            seleccion = obtenerEnteroValido(sc);
+                        int seleccion1 = 0;
+                        while(!(seleccion1 >= 1 && seleccion1 <= 3)){
+                            System.out.println("~~~~~~~~~~~~~~  ~~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~~~");
                             System.out.println("¿Qué cupón desea aplicar?");
                             System.out.println("1. 50% en su siguiente vuelo");
                             System.out.println("2. 30% en su siguiente vuelo, más servicio de comida gourmet durante el vuelo.");
                             System.out.println("3. 20% de descuento en su siguiente viaje, más unos audífonos Sony WH-1000XM5 por asiento.");
-                            switch (seleccion){
+                            seleccion1 = obtenerEnteroValido(sc);
+                            switch (seleccion1){
                                 case 1:
                                     cupones = "50% en siguiente compra";
                                     break;
                                 case 2:
-                                    cupones = "30% en siguiente compra, más servicio gourmet";
+                                    cupones = "30% en siguiente compra | más servicio gourmet";
                                     break;
                                 case 3:
-                                    cupones = "20% en siguiente compra, más audífonos Sony WH-1000XM5 por asiento";
+                                    cupones = "20% en siguiente compra | más audífonos Sony WH-1000XM5 por asiento";
                                     break;
                                 default:
                                     System.out.println("Por favor, seleccione una opción válida ;)");
                                     break;
                             }
-
                         }
                     }
+                    manejoCSV.agregarValoresStr(nombre, 12, cupones);
+                    System.out.println("~~~~~~~~~~~~~~  ~~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~~~");
                     break;
                 case 3:
+                    //Modificación de la contraseña
+                    System.out.println("~~~~~~~~~~~~~~  ~~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~~~");
                     System.out.println("¿Cuál quiere que sea su nueva contrasena?");
                     contrasena = sc.nextLine();
+                    manejoCSV.agregarValoresStr(nombre, 2, contrasena);
+                    System.out.println("Regresando al menú principal.");
                     break;
             }
         }
@@ -268,6 +302,7 @@ public class Base extends Usuario implements Paquete {
 
         //Solicitamos la fecha de ida del usuario
         while (!fechaValida) {
+            System.out.println("~~~~~~~~~~~~~~  ~~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~~~");
             System.out.print("Por favor, ingrese la fecha en la que desea partir(dd/MM/yyyy): ");
             String fechaPartidaStr = sc.nextLine();
 
@@ -279,6 +314,8 @@ public class Base extends Usuario implements Paquete {
             }
         }
         System.out.println("Muchas gracias!!");
+        System.out.println("~~~~~~~~~~~~~~  ~~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~~~");
+        System.out.println();
         SimpleDateFormat formatoFechaIda = new SimpleDateFormat("dd/MM/yyyy");
         fechaIda = formatoFechaIda.format(fechaPartida);
 
@@ -305,7 +342,7 @@ public class Base extends Usuario implements Paquete {
                     break;
             }
         }
-
+        System.out.println();
         //Dependiendo de si tendrá fecha de vuelta o no se le solicita o coloca un dato
         if(establecerSiNo.equals("Si")){
             System.out.println("¿Dentro de cuántos días volverá?");
@@ -313,26 +350,19 @@ public class Base extends Usuario implements Paquete {
         } else{
             fechaVuelta = 0;
         }
+        System.out.println("~~~~~~~~~~~~~~  ~~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~~~");
 
         //Establecemos una cantidad de boletos
         int numero = -1;
         System.out.println("¿Cuántos boletos necesitará?");
-        do {
-            // Solicitar al usuario ingresar un número entre 1 y 20
-            System.out.print("Ingrese un número entre 1 y 20: ");
-            // Leer el número ingresado por el usuario
-            while (!sc.hasNextInt()) {
-                System.out.println("Por favor, ingrese un número válido.");
-                sc.next();  // Limpiar el buffer del scanner
-            }   
+        System.out.println("Solamente puede seleccionar de 1-20 boletos.");
+        while(!(numero >= 1 && numero <= 20)){
             numero = obtenerEnteroValido(sc);
-            // Verificar si el número está en el rango especificado
-            if (numero >= 1 && numero <= 20) {
-                System.out.println("Número válido: " + numero);
-            } else {
-                System.out.println("Número fuera del rango especificado. Inténtelo de nuevo.");
-            }
-        } while (!(numero >= 1 && numero <= 20));
+        }
+
+        cantBoletos = numero;
+        System.out.println();
+        System.out.println("~~~~~~~~~~~~~~  ~~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~  ~~~~~~~~~~~~");
 
         int seleccion = 0;
         while(!(seleccion >= 1 && seleccion <= 5)){
@@ -374,28 +404,19 @@ public class Base extends Usuario implements Paquete {
         int numero = -1;
         Scanner sc = new Scanner(System.in);
         if(tipoUsuario.equals("Base")){
-            System.out.println("Por ser base, se seleccionaran los asientos por usted :(");
             for(int i=0; i<= cantBoletos; i++){
                 numero = rand.nextInt(20) + 1;
                 
             }
         } else {
-            do {
-                // Solicitar al usuario ingresar un número entre 1 y 20
-                System.out.print("Ingrese un número entre 1 y 20: ");
-                // Leer el número ingresado por el usuario
-                while (!sc.hasNextInt()) {
-                    System.out.println("Por favor, ingrese un número válido.");
-                    sc.next();  // Limpiar el buffer del scanner
-                }   
+            System.out.println("Recuerda que debes ir seleccionando números de asientos distintos.");
+            System.out.println();
+            System.out.println("Selecione la cantidad de asientos que concuerden con su cantidad de boletos.");
+            System.out.println("Seleccionó que quería: " + cantBoletos + " boletos.");
+            System.out.println("Seleccione un número del 1-20");
+            while (!(numero >= 1 && numero <= 20)) {
                 numero = obtenerEnteroValido(sc);
-                // Verificar si el número está en el rango especificado
-                if (numero >= 1 && numero <= 20) {
-                    System.out.println("Número válido: " + numero);
-                } else {
-                    System.out.println("Número fuera del rango especificado. Inténtelo de nuevo.");
-                }
-            } while (!(numero >= 1 && numero <= 20));
+        }
         }
         return numero;
     }

@@ -1,3 +1,10 @@
+//Bryan Alberto Martínez Orellana
+//Carnét 23542
+//Ingeniería en Ciencias de la Computación
+//Programación Orientada a Objetos
+//Creación: 10/10/2023
+//Última modificación: 13/10/2023
+
 import java.util.Scanner;
 import java.util.Set;
 
@@ -8,7 +15,7 @@ public class Usuario {
     protected int fechaVuelta;
     protected int cantBoletos;
     protected String Aerolinea;
-    protected int numTarjeta;
+    protected long numTarjeta;
     protected String claseVuelo;
     protected String numAsiento;
     protected int cantMaletas;
@@ -23,16 +30,16 @@ public class Usuario {
         this.tipoUsuario = tipoUsuario;
         this.nombre = nombre;
         this.contrasena = contrasena;
-        this.fechaIda = " ";
+        this.fechaIda = "VACIO";
         this.fechaVuelta = -1;
         this.cantBoletos = -1;
-        this.Aerolinea = " ";
+        this.Aerolinea = "VACIO";
         this.numTarjeta = -1;
-        this.claseVuelo = " ";
-        this.numAsiento = " ";
+        this.claseVuelo = "VACIO";
+        this.numAsiento = "VACIO";
         this.cantMaletas = -1;
         this.cantPagos = -1;
-        this.cupones = " ";
+        this.cupones = "VACIO";
     }    
 
     //Método para asegurarse que se ingrese un entero en los campos necesarios
@@ -55,8 +62,9 @@ public class Usuario {
         return numero;
     }
 
+    //Definimos los valores de todos los usuarios después de que se complta el proceso de reservar un vuelo
     public void setDatosVuelo(String fechaIda, int fechaVuelta, int cantBoletos, String aerolinea,
-                              int numTarjeta, String claseVuelo, String numAsiento, int cantMaletas,
+                              long numTarjeta, String claseVuelo, String numAsiento, int cantMaletas,
                               int cantPagos, String cupones) {
         this.fechaIda = fechaIda;
         this.fechaVuelta = fechaVuelta;
@@ -70,46 +78,7 @@ public class Usuario {
         this.cupones = cupones;
     }
 
-    public void setFechaIda(String fechaIda) {
-        this.fechaIda = fechaIda;
-    }
-
-    public void setFechaVuelta(int fechaVuelta) {
-        this.fechaVuelta = fechaVuelta;
-    }
-
-    public void setCantBoletos(int cantBoletos) {
-        this.cantBoletos = cantBoletos;
-    }
-
-    public void setAerolinea(String aerolinea) {
-        Aerolinea = aerolinea;
-    }
-
-    public void setNumTarjeta(int numTarjeta) {
-        this.numTarjeta = numTarjeta;
-    }
-
-    public void setClaseVuelo(String claseVuelo) {
-        this.claseVuelo = claseVuelo;
-    }
-
-    public void setNumAsiento(String numAsiento) {
-        this.numAsiento = numAsiento;
-    }
-
-    public void setCantMaletas(int cantMaletas) {
-        this.cantMaletas = cantMaletas;
-    }
-
-    public void setCantPagos(int cantPagos) {
-        this.cantPagos = cantPagos;
-    }
-
-    public void setCupones(String cupones) {
-        this.cupones = cupones;
-    }
-
+    //Getters a utilizar en el código
     public String getNombre() {
         return nombre;
     }
@@ -121,10 +90,7 @@ public class Usuario {
     public String getTipoUsuario() {
         return tipoUsuario;
     }  
-
-    
-
-    
+  
 
 
 }

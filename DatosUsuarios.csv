@@ -1,1 +1,8 @@
-﻿Tipo,Nombre,Contrasena,Ida,Vuelta,cantBoletos,Aerolinea,numTarjeta,Clase,numAsiento,cantMaletas,cantPagos,Cupones
+Tipo,Nombre,Contrasena,Ida,Vuelta,cantBoletos,Aerolinea,numTarjeta,Clase,numAsiento,cantMaletas,cantPagos,Cupones
+Premium,Bryan1,Palacios2#,08/08/0008,52,3,Copa Airlines,124578895623,Premium,1;2;3,2,1,50% en siguiente compra
+Premium,Bryan2,Palacios3#,04/05/0006,20,4,UNITED,159284263514,Coach,17;3;4;15,1,16,10% en siguiente compra
+Premium,Bryan3,Bryan3#,04/04/0004,40,4,Delta,147586531526,Premium,2;10;12;14,1,15,VACIO
+Premium,Bryan4,Bryan4#,07/07/0007,10,5,Delta,147258369952,Coach,16;2;6;8;10,1,5,20% en siguiente compra | más audífonos Sony WH-1000XM5 por asiento
+Premium,Bryan5,Bryan5#,04/04/0004,20,6,United Airlines,123456789852,Premium,2;4;6;7;8;9,3,1,20% en siguiente compra | más audífonos Sony WH-1000XM5 por asiento
+Base,Bryan6,Bryan6#,VACIO,-1,-1,VACIO,-1,VACIO,VACIO,-1,-1,VACIO
+Premium,Bryan7,Bryan7#,VACIO,-1,-1,VACIO,-1,VACIO,VACIO,-1,-1,VACIO
